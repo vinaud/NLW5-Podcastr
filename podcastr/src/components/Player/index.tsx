@@ -9,7 +9,7 @@ import Image from 'next/image'
 
 export function Player(){
 
-    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay } = useContext(PlayerContext);
+    const { episodeList, currentEpisodeIndex, isPlaying, togglePlay, setPlayingState } = useContext(PlayerContext);
     const episode = episodeList[currentEpisodeIndex];
 
     const audioRef = useRef<HTMLAudioElement>(null);
@@ -65,7 +65,13 @@ export function Player(){
                 </div>
 
                 { episode && (
-                    <audio src={episode.url} ref={audioRef} autoplay="true" />
+                    <audio 
+                    src={episode.url} 
+                    ref={audioRef} 
+                    autoplay="true" 
+                    onPlay={() => setPlayingState(true)}
+                    onPause={() => setPlayingState(false)}
+                    />
                 )}
 
 
