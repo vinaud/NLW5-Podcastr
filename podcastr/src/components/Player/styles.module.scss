@@ -122,7 +122,7 @@
             background: var(--purple-400);
             transition: filter 0.2s;
 
-            &:hover{
+            &:hover:not(:disabled){
                 filter: brightness(0.95)
             }
         }
