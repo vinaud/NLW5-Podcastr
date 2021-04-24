@@ -6,6 +6,7 @@ import'rc-slider/assets/index.css';
 
 import styles from "./styles.module.scss";
 import Image from 'next/image'
+import { isLastDayOfMonth } from "date-fns/esm";
 
 export function Player(){
 
@@ -18,7 +19,9 @@ export function Player(){
         playNext,
         playPrevious,
         hasNext,
-        hasPrevious
+        hasPrevious,
+        isLooping,
+        toggleLoop
     } = useContext(PlayerContext);
 
     const episode = episodeList[currentEpisodeIndex];
@@ -80,6 +83,7 @@ export function Player(){
                     src={episode.url} 
                     ref={audioRef} 
                     autoplay="true" 
+                    loop={isLooping}
                     onPlay={() => setPlayingState(true)}
                     onPause={() => setPlayingState(false)}
                     />
@@ -106,7 +110,12 @@ export function Player(){
                     <button type="button" onClick={ playNext } disabled={!episode || !hasNext} >
                        <img src="/play-next.svg" alt="Tocar próxima"/>
                     </button>
-                    <button type="button" disabled={!episode}>
+                    <button 
+                    type="button" 
+                    disabled={!episode} 
+                    onClick={toggleLoop}
+                    className={isLooping? styles.isActive : ''}
+                    >
                        <img src="/repeat.svg" alt="Repetir"/>
                     </button>
                 </div>
