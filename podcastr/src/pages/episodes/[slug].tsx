@@ -9,6 +9,8 @@ import Link from 'next/link';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTImeString';
 
 import styles from './episode.module.scss';
+import { useContext } from 'react';
+import { PlayerContext } from '../../contexts/PlayerContext';
 
 type Episode = {
 
@@ -29,7 +31,8 @@ type Episode = {
   }
 
 export default function episode({episode}: EpisodeProps){
-    const router = useRouter();
+
+    const { play } = useContext(PlayerContext);
 
     return(
         <div className={styles.episode}>
@@ -45,7 +48,7 @@ export default function episode({episode}: EpisodeProps){
                   src={episode.thumbnail}
                   objectFit="cover"
                 />
-                <button type="button">
+                <button type="button" onClick={() => play(episode)}>
                     <img src="/play.svg" alt="Tocar episódio" />
                 </button>
             </div>
